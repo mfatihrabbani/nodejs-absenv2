@@ -1,0 +1,11 @@
+CREATE database absen;
+
+
+CREATE TABLE datauser(
+	no int AUTO_INCREMENT PRIMARY KEY,
+	id int NOT NULL,
+	username varchar(255) NOT NULL,
+	email varchar(255) NOT NULL,
+	password varchar(255) NOT NULL,
+	role varchar(255) NOT NULL DEFAULT "user"
+)Engine = InndoDB;
