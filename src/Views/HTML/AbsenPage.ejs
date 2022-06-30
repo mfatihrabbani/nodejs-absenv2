@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title><%= title %></title>
+</head>
+<body>
+	<% if(status == "Empty"){ %>
+
+
+	<button onclick="sendAbsen()" type="button">Absen</button>
+
+
+	<% } else{ %> 
+
+	<h1>You already Absen today</h1>
+
+	<% } %>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+
+	const BASE_URL = "http://localhost:3000"
+
+	async function sendAbsen(){
+		const response = await axios.post(`${BASE_URL}/api/absen`)
+
+		if(response.status == 200) location.reload();
+	}
+</script>
+</body>
+</html>

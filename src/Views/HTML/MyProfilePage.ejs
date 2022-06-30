@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title><%= title %></title>
+</head>
+<body>
+	<% if(status == "Empty"){ %>
+	<form>
+		<h1 id="id"><%= idRes %></h1>
+		<label for = "name">Nama</label>
+		<input type="text" name="name" id="name" required>
+		<br>
+		<label for = "grade">Kelas : </label>
+		<select id = "grade" name = "grade" required>
+			<option value = 10>10</option>
+			<option value = 11>11</option>
+			<option value = 12>12</option>
+		</select>
+		<br>
+		<label for = "major">Jurusan : </label>
+		<select id = "major" name = "grade" required>
+			<option value = "MIPA">MIPA</option>
+			<option value = "Bahasa">Bahasa</option>
+			<option value = "Teknik">Teknik</option>
+		</select>
+		<br>
+		<label for = "bio">Bio</label>
+		<input type="text" name="bio" id="bio" maxlength="100">
+		<br>
+		<button onclick="insertProfile()" type="button">Submit</button>
+	</form>
+
+	<% }else{ %>
+
+
+	<h1>Nama	: <%= nameRes %> </h1>
+	<h1>Kelas	: <%= gradeRes %> </h1>
+	<h1>Jurusan	: <%= majorRes %> </h1>
+	<h1>Bio		: <%= bioRes %> </h1>
+
+	<a href="http://localhost:3000/myprofile/update">
+		<button>Update Profile</button>
+	</a>
+
+	<% } %>
+
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script type="text/javascript">
+
+		
+
+
+		const BASE_URL = "http://localhost:3000"
+
+		async function insertProfile(){
+			const id = document.getElementById("id").innerHTML;
+			const name = document.getElementById("name").value;
+			const grade = document.getElementById("grade").value;
+			const major = document.getElementById("major").value;
+			var bio = document.getElementById("bio").value;
+
+			if(!bio) var bio = " ";
+
+			const data = {
+				id,
+				name,
+				grade,
+				major,
+				bio
+			}
+
+			console.log(data);
+
+			const response = await axios.post(`${BASE_URL}/api/profile`, data);
+
+			if(response.status == 200) window.location.href = `${BASE_URL}/myprofile`;
+		}
+
+
+	</script>
+</body>
+</html>

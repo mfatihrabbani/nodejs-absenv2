@@ -41,7 +41,7 @@ export const getUserByUsername = (username) => {
 };
 
 export const getUserByEmailOrUsername = (data) => {
-	const sql = "SELECT username, email, password FROM datauser WHERE email = ? OR username = ?;";
+	const sql = "SELECT id, username, email, password FROM datauser WHERE email = ? OR username = ?;";
 
 	return new Promise((resolve, reject) => {
 		pool.query(sql, [data, data], (err, results) => {

@@ -61,22 +61,27 @@ export const loginUser = async (req, res) => {
 			passwordInput: password
 		};
 
+		console.log(data)
+
 		const result = await getUserByEmailOrUsername(emailOrUsername);
 
 		if(result.length == 0) return res.status(404).json({messsage: "Please check again input"});
 
-		var {username, email, password} = result[0];
+		var {id, username, email, password} = result[0];
+
+		console.log(id);
 
 		const checkPassword = await bcrypt.compare(data.passwordInput, password);
 
 		if(!checkPassword) return res.status(404).json({messsage: "Password incorrect"});
 
 		const token = jwt.sign({
+			id,
 			username,
 			email
 		}, "rahasia");
 
-		res.cookie("Authorization", "Bearer" + token, {
+		res.cookie("Authorization", "Bearer " + token, {
 			httpOnly: true
 		});
 
@@ -87,6 +92,7 @@ export const loginUser = async (req, res) => {
 			data: token
 		})
 
+
 	}catch(err){
 		return res.status(404).json({
 			code: 404,
@@ -96,4 +102,26 @@ export const loginUser = async (req, res) => {
 
 	}
 
+}
+
+export const renderHome = (req, res) => {
+	const {username, email} = req.user;
+
+	res.render("../Views/HTML/HomePage.ejs", {
+		title: `Home -${username}`,
+		username,
+		email
+	})
+}
+
+export const renderLogin = (req, res) => {
+	res.render("../Views/HTML/LoginPage.ejs", {
+		title: "Sign In"
+	});
+}
+
+export const renderRegister = (req, res) => {
+	res.render("../Views/HTML/RegisterPage.ejs", {
+		title: "Sign Up"
+	});
 }

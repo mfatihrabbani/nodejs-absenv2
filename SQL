@@ -2,10 +2,30 @@ CREATE database absen;
 
 
 CREATE TABLE datauser(
-	no int AUTO_INCREMENT PRIMARY KEY,
-	id int NOT NULL,
+	id varchar(255) NOT NULL PRIMARY KEY,
 	username varchar(255) NOT NULL,
 	email varchar(255) NOT NULL,
 	password varchar(255) NOT NULL,
 	role varchar(255) NOT NULL DEFAULT "user"
 )Engine = InndoDB;
+
+
+CREATE TABLE dataprofile(
+	id_profile varchar(255) NOT NULL PRIMARY KEY,
+	name varchar(255) NOT NULL,
+	grade int(10) NOT NULL,
+	major varchar(255) NOT NULL,
+	bio varchar(255),
+	CONSTRAINT fk_dataprofile_datauser
+	FOREIGN KEY (id_profile) REFERENCES datauser(id)
+)Engine = InnoDB;
+
+CREATE TABLE dataabsen(
+	id_absen varchar(255) NOT NULL PRIMARY KEY,
+	dateAbsen varchar(255) NOT NULL,
+	timeAbsen varchar(255) NOT NULL,
+	statusAbsen varchar(255) NOT NULL,
+	status varchar(255) NOT NULL,
+	CONSTRAINT fk_databsen_dataprofile
+	FOREIGN KEY (id_absen) REFERENCES dataprofile(id_profile)
+)Engine = InnoDB;

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<head>
+	<title><%= title %></title>
+</head>
+
+<body>
+
+	<form>
+		<label for = "email">Email</label>
+		<input type="text" name="emailOrUsername" id="emailOrUsername">
+		<label for = "password">Password</label>
+		<input type="password" name="password" id="password">
+		<button onclick="login()" type="button">Submit</button>
+	</form>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+
+	const BASE_URL = "http://localhost:3000"
+
+
+	async function login(){
+		const emailOrUsername = document.getElementById("emailOrUsername").value;
+		const password = document.getElementById("password").value;
+
+		console.log(emailOrUsername)
+		console.log(password)
+
+		const data = {
+			emailOrUsername,
+			password
+		}
+
+
+
+		try{
+			const response = await axios.post(`${BASE_URL}/api/users/signin`, data)
+
+			if(response.status == 200) window.location.href = `${BASE_URL}/home`;
+
+		}catch(err){
+			console.log(err)
+		}
+
+}
+
+</script>
+</body>
+
+</html>
